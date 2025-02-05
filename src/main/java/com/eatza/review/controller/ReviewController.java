@@ -16,8 +16,8 @@ import com.eatza.review.exception.ReviewException;
 import com.eatza.review.model.RestaurantReview;
 import com.eatza.review.service.ReviewService;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 public class ReviewController {
@@ -26,14 +26,16 @@ public class ReviewController {
 	ReviewService ratingService;
 	
 	@GetMapping("/review/restaurant/{restaurantId}")
-	@ApiOperation(tags = "ReviewController", value = "Get restaurant rating by restaurant id", authorizations = {@Authorization(value = "Bearer")})
+	@SecurityRequirement(name = "BearerAuth")
+	@Operation(tags = "ReviewController", description = "Get restaurant rating by restaurant id")
 	public ResponseEntity<RestaurantRatingDto> viewRestaurantRating(@PathVariable Long restaurantId) throws ReviewException {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(ratingService.getRestaurantRating(restaurantId));
 	}
 	
 	@PostMapping("/review/restaurant/{restaurantId}")
-	@ApiOperation(tags = "ReviewController", value = "Provide rating to restaurant ", authorizations = {@Authorization(value = "Bearer")})
+	@SecurityRequirement(name = "BearerAuth")
+	@Operation(tags = "ReviewController", description = "Provide rating to restaurant ")
 	public ResponseEntity<RestaurantReview> provideRestaurantRating(@PathVariable Long restaurantId, 
 			@RequestParam Double rating, @RequestParam Long customerId) throws ReviewException {
 		return ResponseEntity.status(HttpStatus.OK)
@@ -41,7 +43,8 @@ public class ReviewController {
 	}
 	
 	@PutMapping("/review/restaurant/{restaurantId}/rating/{id}")
-	@ApiOperation(tags = "ReviewController", value = "Update rating of restaourant", authorizations = {@Authorization(value = "Bearer")})
+	@SecurityRequirement(name = "BearerAuth")
+	@Operation(tags = "ReviewController", description = "Update rating of restaourant")
 	public ResponseEntity<RatingUpdateDto> updateRestaurantRating(@PathVariable Long restaurantId, 
 			@PathVariable Long id, @RequestParam Double rating, @RequestParam Long customerId) throws ReviewException {
 		return ResponseEntity.status(HttpStatus.OK)
