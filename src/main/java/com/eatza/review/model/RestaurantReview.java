@@ -15,7 +15,7 @@ import lombok.Setter;
 @Entity
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Builder
-@Table(name = "Restaurant_Review")
+@Table(name = "review", schema = "eatza")
 public class RestaurantReview {
 	
 	@Id
